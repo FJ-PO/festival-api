@@ -13,6 +13,8 @@ from sqlalchemy import select
 
 import app.models  # noqa: F401
 from app.core.security import hash_password
+from app.core.config import settings
+from app.db.bootstrap import ensure_admin
 from app.db.session import Base, SessionLocal, engine
 from app.models import (
     Artist,
@@ -116,7 +118,9 @@ def seed() -> None:
     db.flush()
     db.add(DiscountCode(festival_id=estrecho.id, code="CAMPO10", percent_off=10, max_uses=200))
     db.commit()
+    ensure_admin(db)
 
+    print(f"Administrador del panel: usuario '{settings.admin_username}' / contraseña '{settings.admin_password}'")
     print("Datos de ejemplo cargados. Usuarios (contraseña:", PASSWORD + "):")
     for user in users.values():
         print(f"  - {user.email:32} rol={user.role.value}")

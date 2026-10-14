@@ -5,13 +5,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import app.models  # noqa: F401  (registra los modelos en Base.metadata)
 from app.core.config import settings
-from app.db.session import Base, engine
+from app.db.bootstrap import ensure_admin, upgrade_schema
+from app.db.session import Base, SessionLocal, engine
 from app.routers import artists, auth, checkin, discounts, festivals, orders, ticket_types, tickets, users, venues
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
+    upgrade_schema(engine)
+    with SessionLocal() as db:
+        ensure_admin(db)
     yield
 
 
@@ -29,7 +33,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
-    allow_credentials=True,
+    # Autenticación solo con JWT en la cabecera Authorization: sin cookies ni sesiones
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

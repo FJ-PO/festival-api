@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+import app.main as main_module
 import app.models  # noqa: F401
 from app.core.security import hash_password
 from app.db.session import Base, get_db
@@ -24,10 +25,14 @@ def db():
 
 
 @pytest.fixture()
-def client(db):
+def client(db, monkeypatch, tmp_path):
     def override_get_db():
         yield db
 
+    # El arranque (create_all + administrador inicial) debe usar la BD de tests, no festival.db
+    monkeypatch.setattr(main_module, "engine", engine)
+    monkeypatch.setattr(main_module, "SessionLocal", TestingSession)
+    monkeypatch.setattr(main_module.settings, "upload_dir", str(tmp_path / "uploads"))
     app.dependency_overrides[get_db] = override_get_db
     with TestClient(app) as c:
         yield c

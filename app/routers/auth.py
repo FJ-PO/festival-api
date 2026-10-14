@@ -2,8 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy import select
+from sqlalchemy import or_, select
 
+from app.core.config import settings
 from app.core.deps import CurrentUser, DbSession
 from app.core.security import create_access_token, hash_password, verify_password
 from app.models import User, UserRole
@@ -31,13 +32,21 @@ def register(data: UserRegister, db: DbSession):
 
 @router.post("/login", response_model=Token)
 def login(form: Annotated[OAuth2PasswordRequestForm, Depends()], db: DbSession):
-    """Login con formulario OAuth2 (campo `username` = email). Devuelve un JWT Bearer."""
-    user = db.scalar(select(User).where(User.email == form.username.lower()))
+    """Login con formulario OAuth2 (campo `username` = email o nombre de usuario). Devuelve un JWT Bearer.
+
+    No se crea ninguna cookie ni sesión: el cliente guarda el token y lo envía en `Authorization: Bearer <token>`.
+    """
+    identifier = form.username.strip()
+    user = db.scalar(select(User).where(or_(User.email == identifier.lower(), User.username == identifier)))
     if user is None or not verify_password(form.password, user.hashed_password):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Email o contraseña incorrectos")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Usuario o contraseña incorrectos")
     if not user.is_active:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Cuenta desactivada")
-    return Token(access_token=create_access_token(user.id, user.role), user=UserRead.model_validate(user))
+    return Token(
+        access_token=create_access_token(user.id, user.role),
+        expires_in=settings.access_token_expire_minutes * 60,
+        user=UserRead.model_validate(user),
+    )
 
 
 @router.get("/me", response_model=UserRead)
