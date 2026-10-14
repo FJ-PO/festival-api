@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     # Administrador que se crea al arrancar si no existe
     admin_username: str = "admin"
     admin_password: str = "admin123"
-    admin_email: str = "admin@festivales-campo.es"
+    admin_email: str = "admin@laspalomasfestival.es"
 
     # Carpeta donde se guardan los archivos subidos desde el panel (biblioteca de medios)
     upload_dir: str = "uploads"

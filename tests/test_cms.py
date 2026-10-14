@@ -93,3 +93,13 @@ def test_dashboard(client, admin_headers, make_user, login):
     assert body["users_by_role"]["admin"] >= 1
     make_user(UserRole.CUSTOMER)
     assert client.get("/api/v1/admin/dashboard", headers=login("customer@example.com")).status_code == 403
+
+
+def test_newsletter(client, admin_headers):
+    r = client.post("/api/v1/newsletter", json={"email": "Fan@Example.com", "name": "Fan"})
+    assert r.status_code == 201
+    assert client.post("/api/v1/newsletter", json={"email": "fan@example.com"}).status_code == 200
+    assert client.post("/api/v1/newsletter", json={"email": "no-es-email"}).status_code == 422
+    assert client.get("/api/v1/newsletter").status_code == 401
+    subs = client.get("/api/v1/newsletter", headers=admin_headers).json()
+    assert subs["total"] == 1 and subs["items"][0]["email"] == "fan@example.com"

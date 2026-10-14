@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 from app.models.enums import ContentStatus
 from app.schemas.common import ORMModel
@@ -22,32 +22,35 @@ class SocialLinks(BaseModel):
 class SiteSettings(BaseModel):
     """Todo lo que el administrador puede cambiar de la web pública sin tocar código."""
 
-    site_name: str = Field(default="Festivales del Estrecho", max_length=100)
-    tagline: str = Field(default="Música en directo en el Campo de Gibraltar", max_length=200)
-    hero_kicker: str = Field(default="Temporada 2027", max_length=80)
-    hero_title: str = Field(default="Siete municipios. Un verano entero de música.", max_length=200)
+    site_name: str = Field(default="Las Palomas Festival", max_length=100)
+    tagline: str = Field(default="Música y humor en la Plaza de Toros de Algeciras", max_length=200)
+    hero_kicker: str = Field(default="Algeciras · Verano 2027", max_length=80)
+    hero_title: str = Field(default="Un sábado. Una estrella. Todo el verano.", max_length=200)
     hero_subtitle: str = Field(
-        default="Conciertos frente al Estrecho, noches en castillos y festivales a pie de playa.",
+        default="Cada sábado de mayo a agosto, los grandes nombres de la música y el humor en la Plaza de Toros de Algeciras.",
         max_length=400,
     )
     hero_image_url: str | None = Field(default=None, max_length=500)
     hero_cta_text: str = Field(default="Ver programación", max_length=60)
     hero_cta_link: str = Field(default="/programacion", max_length=300)
     featured_festival_id: int | None = None
-    announcement: str | None = Field(default=None, max_length=200, description="Banda superior de aviso")
+    announcement: str | None = Field(
+        default="Nuevas confirmaciones muy pronto · Entradas ya a la venta", max_length=200,
+        description="Banda superior de aviso",
+    )
     about_title: str = Field(default="Sobre nosotros", max_length=120)
     about_text: str = Field(
         default=(
-            "Somos una red de promotores locales que lleva la mejor música en directo a Algeciras, "
-            "La Línea, San Roque, Los Barrios, Tarifa, Jimena y Castellar."
+            "Las Palomas Festival convierte la Plaza de Toros de Algeciras en el gran escenario del verano "
+            "en el Campo de Gibraltar: pop, flamenco, música urbana y humor, una noche cada semana."
         ),
         max_length=4000,
     )
-    contact_email: str | None = Field(default="info@festivales-campo.es", max_length=200)
+    contact_email: str | None = Field(default="info@laspalomasfestival.es", max_length=200)
     contact_phone: str | None = Field(default=None, max_length=50)
     accent_color: str = Field(default="#ff3366", pattern=r"^#[0-9a-fA-F]{6}$")
     social: SocialLinks = SocialLinks()
-    footer_text: str = Field(default="© Festivales del Estrecho. Todos los derechos reservados.", max_length=300)
+    footer_text: str = Field(default="© Las Palomas Festival · Algeciras", max_length=300)
 
 
 class SiteSettingsRead(SiteSettings):
@@ -166,3 +169,18 @@ class Dashboard(BaseModel):
     posts: int
     sales_last_30_days: list[SalesPoint]
     recent_orders: list[RecentOrder]
+
+
+# ---------- Newsletter ----------
+
+
+class SubscriberCreate(BaseModel):
+    email: EmailStr
+    name: str | None = Field(default=None, max_length=150)
+
+
+class SubscriberRead(ORMModel):
+    id: int
+    email: str
+    name: str | None
+    created_at: datetime

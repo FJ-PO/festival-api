@@ -1,5 +1,5 @@
 from app.models.artist import Artist
-from app.models.cms import Media, Page, Post, SiteConfig
+from app.models.cms import Media, Page, Post, SiteConfig, Subscriber
 from app.models.discount import DiscountCode
 from app.models.enums import ContentStatus, FestivalStatus, Municipality, OrderStatus, TicketStatus, UserRole
 from app.models.festival import Festival, Performance
@@ -24,6 +24,7 @@ __all__ = [
     "Performance",
     "Post",
     "SiteConfig",
+    "Subscriber",
     "Ticket",
     "TicketStatus",
     "TicketType",

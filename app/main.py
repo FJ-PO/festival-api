@@ -17,6 +17,7 @@ from app.routers import (
     discounts,
     festivals,
     media,
+    newsletter,
     orders,
     ticket_types,
     tickets,
@@ -79,6 +80,7 @@ for router in (
     cms.pages_router,
     cms.posts_router,
     media.router,
+    newsletter.router,
     admin.router,
 ):
     app.include_router(router, prefix=settings.api_prefix)

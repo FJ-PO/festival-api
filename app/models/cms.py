@@ -76,3 +76,14 @@ class Media(Base):
     @property
     def url(self) -> str:
         return f"/uploads/{self.filename}"
+
+
+class Subscriber(Base):
+    """Suscripción a la newsletter desde la web pública."""
+
+    __tablename__ = "subscribers"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    name: Mapped[str | None] = mapped_column(String(150))
+    created_at: Mapped[datetime] = mapped_column(default=utcnow)
