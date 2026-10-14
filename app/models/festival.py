@@ -37,6 +37,12 @@ class Festival(Base):
         back_populates="festival", cascade="all, delete-orphan"
     )
 
+    @property
+    def price_from(self):
+        """Precio más barato entre los tipos de entrada activos (para "desde X €" en el front)."""
+        prices = [tt.price for tt in self.ticket_types if tt.is_active]
+        return min(prices) if prices else None
+
 
 class Performance(Base):
     """Actuación de un artista dentro del cartel de un festival."""

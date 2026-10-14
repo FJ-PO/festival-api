@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from decimal import Decimal
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -51,6 +52,7 @@ class FestivalRead(ORMModel):
     venue: VenueRead
     organizer: UserBrief
     created_at: datetime
+    price_from: Decimal | None = None
 
 
 class PerformanceCreate(BaseModel):
