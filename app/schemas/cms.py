@@ -23,11 +23,11 @@ class SiteSettings(BaseModel):
     """Todo lo que el administrador puede cambiar de la web pública sin tocar código."""
 
     site_name: str = Field(default="Las Palomas Festival", max_length=100)
-    tagline: str = Field(default="Música y humor en la Plaza de Toros de Algeciras", max_length=200)
-    hero_kicker: str = Field(default="Algeciras · Verano 2027", max_length=80)
-    hero_title: str = Field(default="Un sábado. Una estrella. Todo el verano.", max_length=200)
+    tagline: str = Field(default="Música y humor en las plazas de toros del Campo de Gibraltar", max_length=200)
+    hero_kicker: str = Field(default="Algeciras · La Línea · Los Barrios · Verano 2027", max_length=80)
+    hero_title: str = Field(default="Tres plazas. Una estrella cada semana. Todo el verano.", max_length=200)
     hero_subtitle: str = Field(
-        default="Cada sábado de mayo a agosto, los grandes nombres de la música y el humor en la Plaza de Toros de Algeciras.",
+        default="De mayo a agosto, los grandes nombres de la música y el humor en las plazas de toros de Algeciras, La Línea y Los Barrios.",
         max_length=400,
     )
     hero_image_url: str | None = Field(default=None, max_length=500)
@@ -38,11 +38,11 @@ class SiteSettings(BaseModel):
         default="Nuevas confirmaciones muy pronto · Entradas ya a la venta", max_length=200,
         description="Banda superior de aviso",
     )
-    about_title: str = Field(default="Sobre nosotros", max_length=120)
+    about_title: str = Field(default="Tres plazas, un mismo festival", max_length=120)
     about_text: str = Field(
         default=(
-            "Las Palomas Festival convierte la Plaza de Toros de Algeciras en el gran escenario del verano "
-            "en el Campo de Gibraltar: pop, flamenco, música urbana y humor, una noche cada semana."
+            "Las Palomas Festival convierte las plazas de toros de Algeciras, La Línea y Los Barrios en los grandes "
+            "escenarios del verano en el Campo de Gibraltar: pop, flamenco, música urbana y humor cada semana."
         ),
         max_length=4000,
     )
@@ -50,7 +50,7 @@ class SiteSettings(BaseModel):
     contact_phone: str | None = Field(default=None, max_length=50)
     accent_color: str = Field(default="#ff3366", pattern=r"^#[0-9a-fA-F]{6}$")
     social: SocialLinks = SocialLinks()
-    footer_text: str = Field(default="© Las Palomas Festival · Algeciras", max_length=300)
+    footer_text: str = Field(default="© Las Palomas Festival · Campo de Gibraltar", max_length=300)
 
 
 class SiteSettingsRead(SiteSettings):

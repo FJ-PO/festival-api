@@ -1,7 +1,8 @@
 # Las Palomas Festival · Algeciras
 
-Plataforma completa para el ciclo de conciertos y humor **Las Palomas Festival**, en la **Plaza de Toros de Algeciras**:
-una noche cada sábado de mayo a agosto de 2027.
+Plataforma completa para el ciclo de conciertos y humor **Las Palomas Festival**, repartido entre tres plazas de toros del
+Campo de Gibraltar: **Algeciras**, **La Línea** y **Los Barrios**. Hay una noche cada sábado, rotando de plaza, de mayo a agosto de
+2027, y algunos viernes en los que un artista repite en otra plaza.
 
 | Parte | Carpeta | Tecnología | Puerto |
 |---|---|---|---|
@@ -11,7 +12,7 @@ una noche cada sábado de mayo a agosto de 2027.
 
 Cartel de ejemplo: Melendi, Niña Pastori, Dellafuente, India Martínez, Lola Índigo, Maka, Manuel Carrasco, Ana Mena,
 Andy & Lucas, Estopa, Antonio José, Rels B y las noches de humor de Dani Rovira, Los Morancos, Leo Harlem, Manu Sánchez y
-Comandante Lara & Cía.
+Comandante Lara & Cía. Melendi, Niña Pastori, Dellafuente, Maka y Dani Rovira tienen doble fecha en dos plazas distintas.
 
 ## Puesta en marcha
 
@@ -45,7 +46,7 @@ panel, `VITE_PUBLIC_SITE` (URL de la web, para los enlaces de "Ver en la web").
 | Panel (puerta) | `staff@example.com` | `Password123` | Personal de puerta |
 | Web | `customer@example.com` | `Password123` | Cliente |
 
-Código de descuento de ejemplo: `PALOMAS10` (noche de Melendi). Pago simulado: una tarjeta que termina en `0000` se rechaza.
+Código de descuento de ejemplo: `PALOMAS10` (Melendi en Algeciras, 8 de mayo). Pago simulado: una tarjeta que termina en `0000` se rechaza.
 
 > ⚠️ `admin` / `admin123` es la cuenta de desarrollo. En producción define `ADMIN_PASSWORD` en el `.env` **antes del primer
 > arranque**, o cambia la contraseña desde *Mi perfil* en el panel.

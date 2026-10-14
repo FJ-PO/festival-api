@@ -52,3 +52,7 @@ export const ORDER_STATUS: Record<string, string> = {
 }
 
 export const TICKET_STATUS: Record<string, string> = { valid: 'Válida', used: 'Utilizada', cancelled: 'Anulada' }
+
+/** Nombre corto del municipio para etiquetas ("La Línea de la Concepción" -> "La Línea"). */
+export const shortTown = (municipality: string) =>
+  municipality.replace(' de la Concepción', '').replace(' de la Frontera', '')

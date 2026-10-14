@@ -14,6 +14,7 @@ class TicketRead(ORMModel):
     festival_id: int
     festival_name: str
     festival_start_date: date
+    venue_name: str
     ticket_type_id: int
     ticket_type_name: str
     owner_id: int

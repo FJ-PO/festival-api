@@ -23,10 +23,11 @@ main ─────────────────────────
                  └─ feature/frontend      #3  web pública + programación + newsletter
                       └─ feature/admin-panel  #4  panel de administración
                            └─ docs/readme-ci  #5  README, guía y CI
+                                └─ feature/tres-plazas  #6  Algeciras, La Línea y Los Barrios
 ```
 
 Como cada funcionalidad depende de la anterior, los PR están **encadenados**: la base de cada uno es la rama anterior. Al
-fusionar uno, GitHub cambia automáticamente la base del siguiente. Se fusionan en orden (#1 → #5) y, al final, se abre un PR de
+fusionar uno, GitHub cambia automáticamente la base del siguiente. Se fusionan en orden (#1 → #6) y, al final, se abre un PR de
 `develop` a `main` para la release.
 
 ## Commits

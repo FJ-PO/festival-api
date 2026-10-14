@@ -37,6 +37,7 @@ export default function Header() {
             <NavLink to="/" end>Inicio</NavLink>
             <NavLink to="/programacion">Programación</NavLink>
             <NavLink to="/artistas">Artistas</NavLink>
+            <NavLink to="/plazas">Plazas</NavLink>
             <NavLink to="/noticias">Noticias</NavLink>
             {menuPages.map((p) => (
               <NavLink key={p.id} to={`/p/${p.slug}`}>{p.title}</NavLink>

@@ -396,6 +396,7 @@ p {
 }
 
 .logo-text strong {
+  white-space: nowrap;
   font-family: var(--display);
   font-weight: 400;
   font-size: 1.35rem;
@@ -418,7 +419,8 @@ p {
 }
 
 .main-nav a:not(.btn) {
-  padding: 8px 12px;
+  white-space: nowrap;
+  padding: 8px 10px;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.92rem;
@@ -482,7 +484,7 @@ p {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1280px) {
   .burger {
     display: block;
   }
@@ -704,7 +706,7 @@ p {
 }
 
 .lineup-names span {
-  display: inline;
+  display: inline-block;
 }
 
 .lineup-names a {
@@ -814,6 +816,13 @@ p {
   right: 14px;
 }
 
+.night-town {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  background: rgba(11, 10, 16, 0.7);
+}
+
 .night-body {
   padding: 18px 20px 20px;
   display: flex;
@@ -856,50 +865,88 @@ p {
   border-bottom: 1px solid var(--line);
 }
 
-.venue-inner {
-  display: grid;
-  grid-template-columns: minmax(240px, 0.8fr) 1.2fr;
-  gap: 64px;
-  align-items: center;
+.venue .section-head .lead {
+  margin: 12px 0 0;
 }
 
-.venue-ring {
+.plazas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.plaza-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.plaza-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.plaza-ring {
+  width: 150px;
   aspect-ratio: 1;
   border-radius: 50%;
   display: grid;
   place-items: center;
+  margin-bottom: 22px;
   background:
-    radial-gradient(circle, #d8a65a 0 38%, transparent 38.5%),
-    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 22px),
-    var(--bg-3);
-  border: 10px solid color-mix(in srgb, var(--accent) 70%, #000);
-  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.6);
+    radial-gradient(circle, #d8a65a 0 40%, transparent 40.5%),
+    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 14px),
+    var(--bg-2);
+  border: 7px solid color-mix(in srgb, var(--accent) 70%, #000);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
 }
 
-.venue-ring div {
+.plaza-ring div {
   text-align: center;
   color: #2a1a05;
-}
-
-.venue-ring strong {
-  display: block;
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1;
 }
 
-.venue-ring span {
+.plaza-ring strong {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 2.4rem;
+}
+
+.plaza-ring span {
+  font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.plaza-body .kicker {
+  margin-bottom: 4px;
+}
+
+.plaza-body h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1.9rem;
+  margin-bottom: 6px;
+}
+
+.plaza-next {
+  margin: 14px 0 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
 }
 
 .venue-facts {
   list-style: none;
   padding: 0;
-  margin: 28px 0;
+  margin: 28px 0 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
@@ -921,16 +968,6 @@ p {
 }
 
 @media (max-width: 800px) {
-  .venue-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .venue-ring {
-    max-width: 280px;
-    margin: 0 auto;
-  }
-
   .venue-facts {
     grid-template-columns: 1fr;
   }
@@ -1112,6 +1149,22 @@ p {
 .festival-when::first-letter,
 .ticket > p.muted::first-letter {
   text-transform: uppercase;
+}
+
+.also-at {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(11, 10, 16, 0.6);
+  backdrop-filter: blur(8px);
+  font-weight: 600;
+}
+
+.also-at a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .festival-when span {
@@ -1343,7 +1396,8 @@ p {
   margin: 8px 0 0;
 }
 
-.artist-overlay > span:last-child {
+.artist-date {
+  display: block;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.8rem;

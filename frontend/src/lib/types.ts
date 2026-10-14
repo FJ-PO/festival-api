@@ -113,6 +113,7 @@ export interface Ticket {
   festival_id: number
   festival_name: string
   festival_start_date: string
+  venue_name: string
   ticket_type_id: number
   ticket_type_name: string
   owner_id: number

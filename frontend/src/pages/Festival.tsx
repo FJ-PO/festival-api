@@ -5,14 +5,16 @@ import Poster from '../components/Poster'
 import { BackLink, ErrorBox, Loader } from '../components/ui'
 import { api } from '../lib/api'
 import { useAuth } from '../lib/auth'
-import { euros, hour, longDay } from '../lib/format'
-import type { FestivalDetail, Order, TicketType } from '../lib/types'
+import { dayNumber, euros, hour, longDay, shortMonth, shortTown } from '../lib/format'
+import type { Festival, FestivalDetail, Order, PageOf, TicketType } from '../lib/types'
 import { useFetch } from '../lib/useFetch'
 
 export default function FestivalPage() {
   const { slug } = useParams()
   const { data: festival, error, loading, reload } = useFetch<FestivalDetail>(`/festivals/slug/${slug}`)
   const types = useFetch<TicketType[]>(festival ? `/festivals/${festival.id}/ticket-types` : null)
+  const sameArtist = useFetch<PageOf<Festival>>(festival ? `/festivals?limit=20&q=${encodeURIComponent(festival.name)}` : null)
+  const otherDates = (sameArtist.data?.items ?? []).filter((f) => f.name === festival?.name && f.id !== festival?.id)
 
   if (loading) return <div className="container section"><Loader /></div>
   if (error || !festival) return <div className="container section"><ErrorBox message={error ?? 'No encontrado'} onRetry={reload} /></div>
@@ -32,6 +34,17 @@ export default function FestivalPage() {
             {longDay(festival.start_date)} · {festival.performances[0] ? hour(festival.performances[0].start_time) : '22:00'} h
             <span> · {festival.venue.name}</span>
           </p>
+          {otherDates.length > 0 && (
+            <p className="also-at">
+              También en{' '}
+              {otherDates.map((f, i) => (
+                <span key={f.id}>
+                  {i > 0 && ' y '}
+                  <Link to={`/festivales/${f.slug}`}>{shortTown(f.venue.municipality)} · {dayNumber(f.start_date)} {shortMonth(f.start_date)}</Link>
+                </span>
+              ))}
+            </p>
+          )}
           {festival.status === 'cancelled' && <p className="tag tag-danger">Espectáculo cancelado · pedidos reembolsados</p>}
           {festival.status === 'draft' && <p className="tag">Borrador · solo visible para la organización</p>}
         </div>

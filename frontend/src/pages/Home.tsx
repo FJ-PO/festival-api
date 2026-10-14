@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import NightCard from '../components/NightCard'
+import Plazas from '../components/Plazas'
 import Poster from '../components/Poster'
 import { ErrorBox, Loader } from '../components/ui'
 import { mediaUrl } from '../lib/api'
@@ -30,6 +31,8 @@ export default function Home() {
   const [filter, setFilter] = useState<'all' | 'music' | 'humor'>('all')
 
   const all = useMemo(() => nights.data?.items ?? [], [nights.data])
+  // En el cartel cada artista aparece una sola vez aunque repita en varias plazas
+  const headliners = useMemo(() => all.filter((f, i) => all.findIndex((g) => g.name === f.name) === i), [all])
   const featured = all.find((f) => f.id === settings?.featured_festival_id) ?? all[0]
   const countdown = useCountdown(featured?.start_date)
   const shown = all.filter((f) => filter === 'all' || (filter === 'humor') === (f.genre === 'Humor')).slice(0, 8)
@@ -83,17 +86,17 @@ export default function Home() {
           <div className="container">
             <h2 id="cartel" className="section-label">El cartel</h2>
             <p className="lineup-names">
-              {all.map((f, i) => (
+              {headliners.map((f, i) => (
                 <span key={f.id}>
                   <Link to={`/festivales/${f.slug}`} className={i < 6 ? 'big' : f.genre === 'Humor' ? 'humor' : ''}>
                     {f.name}
                   </Link>
-                  {i < all.length - 1 && <i aria-hidden="true">●</i>}
+                  {i < headliners.length - 1 && <i aria-hidden="true">●</i>}
                 </span>
               ))}
             </p>
             <p className="muted lineup-dates">
-              {dateRange(all[0].start_date, all[all.length - 1].end_date)} · Un sábado, una estrella
+              {dateRange(all[0].start_date, all[all.length - 1].end_date)} · Algeciras · La Línea · Los Barrios
             </p>
           </div>
         </section>
@@ -122,22 +125,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section venue">
-        <div className="container venue-inner">
-          <div className="venue-ring" aria-hidden="true">
-            <div><strong>{all[0]?.venue.capacity?.toLocaleString('es-ES') ?? '6.000'}</strong><span>personas</span></div>
+      <section className="section venue" id="plazas">
+        <div className="container">
+          <div className="section-head">
+            <div>
+              <p className="kicker">Las sedes</p>
+              <h2 className="h-section">{settings?.about_title ?? 'Las plazas'}</h2>
+              <p className="lead">{settings?.about_text}</p>
+            </div>
+            <Link to="/p/como-llegar" className="link-arrow">Cómo llegar →</Link>
           </div>
-          <div>
-            <p className="kicker">El recinto</p>
-            <h2 className="h-section">{settings?.about_title ?? 'Plaza de Toros de Algeciras'}</h2>
-            <p className="lead">{settings?.about_text}</p>
-            <ul className="venue-facts">
-              <li><strong>Pista</strong><span>De pie, en el ruedo</span></li>
-              <li><strong>Grada</strong><span>Asiento numerado</span></li>
-              <li><strong>Front Stage</strong><span>Junto al escenario</span></li>
-            </ul>
-            <Link to="/p/como-llegar" className="btn btn-ghost">Cómo llegar</Link>
-          </div>
+          <Plazas nights={all} />
+          <ul className="venue-facts">
+            <li><strong>Pista</strong><span>De pie, en el ruedo</span></li>
+            <li><strong>Grada</strong><span>Asiento numerado en tendido</span></li>
+            <li><strong>Front Stage</strong><span>Zona preferente junto al escenario</span></li>
+          </ul>
         </div>
       </section>
 

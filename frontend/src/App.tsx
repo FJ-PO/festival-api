@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout'
 import FestivalPage from './pages/Festival'
 import Home from './pages/Home'
 import { CmsPageView, NewsDetail, NewsList } from './pages/News'
+import PlazasPage from './pages/PlazasPage'
 import Program from './pages/Program'
 
 function ScrollToTop() {
@@ -40,6 +41,7 @@ export default function App() {
           <Route path="/programacion" element={<Program />} />
           <Route path="/festivales/:slug" element={<FestivalPage />} />
           <Route path="/artistas" element={<Artists />} />
+          <Route path="/plazas" element={<PlazasPage />} />
           <Route path="/noticias" element={<NewsList />} />
           <Route path="/noticias/:slug" element={<NewsDetail />} />
           <Route path="/p/:slug" element={<CmsPageView />} />

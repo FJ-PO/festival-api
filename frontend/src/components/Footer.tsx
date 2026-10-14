@@ -32,6 +32,7 @@ export default function Footer() {
           <ul>
             <li><Link to="/programacion">Programación</Link></li>
             <li><Link to="/artistas">Artistas</Link></li>
+            <li><Link to="/plazas">Las plazas</Link></li>
             <li><Link to="/noticias">Noticias</Link></li>
             {menuPages.map((p) => <li key={p.id}><Link to={`/p/${p.slug}`}>{p.title}</Link></li>)}
           </ul>
@@ -49,7 +50,7 @@ export default function Footer() {
           <ul>
             {settings?.contact_email && <li><a href={`mailto:${settings.contact_email}`}>{settings.contact_email}</a></li>}
             {settings?.contact_phone && <li><a href={`tel:${settings.contact_phone}`}>{settings.contact_phone}</a></li>}
-            <li className="muted">Plaza de Toros de Algeciras</li>
+            <li><Link to="/plazas">Algeciras · La Línea · Los Barrios</Link></li>
           </ul>
         </div>
       </div>

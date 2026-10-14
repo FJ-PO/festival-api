@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { dayNumber, euros, parts, shortMonth } from '../lib/format'
+import { dayNumber, euros, parts, shortMonth, shortTown } from '../lib/format'
 import type { Festival } from '../lib/types'
 import Poster from './Poster'
 
@@ -18,6 +18,7 @@ export default function NightCard({ festival }: { festival: Festival }) {
           <span>{shortMonth(festival.start_date)}</span>
         </div>
         {festival.genre && <span className="tag night-genre">{festival.genre}</span>}
+        <span className="tag night-town">{shortTown(festival.venue.municipality)}</span>
       </div>
       <div className="night-body">
         <h3>{festival.name}</h3>

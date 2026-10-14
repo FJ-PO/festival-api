@@ -47,5 +47,9 @@ class Ticket(Base):
         return self.festival.start_date
 
     @property
+    def venue_name(self) -> str:
+        return self.festival.venue.name
+
+    @property
     def ticket_type_name(self) -> str:
         return self.ticket_type.name

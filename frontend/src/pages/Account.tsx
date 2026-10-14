@@ -79,7 +79,7 @@ function TicketCard({ ticket, onChange }: { ticket: Ticket; onChange: () => void
         <span className={`status status-${ticket.status}`}>{TICKET_STATUS[ticket.status]}</span>
       </div>
       <h3>{ticket.festival_name}</h3>
-      <p className="muted">{longDay(ticket.festival_start_date)} · Plaza de Toros de Algeciras</p>
+      <p className="muted">{longDay(ticket.festival_start_date)} · {ticket.venue_name}</p>
       <div className="ticket-qr">
         <QRCode value={ticket.code} />
         <code>{ticket.code}</code>

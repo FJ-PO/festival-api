@@ -312,7 +312,7 @@ function Lineup({ festival, onChange }: { festival: FestivalDetail; onChange: ()
             </select>
           </Field>
           <p className="small muted">¿No está? <Link to="/artistas">Créalo en Artistas</Link>.</p>
-          <Field label="Escenario"><input name="stage" defaultValue="Escenario Las Palomas" required /></Field>
+          <Field label="Escenario"><input name="stage" defaultValue="Escenario principal" required /></Field>
           <Field label="Inicio"><input name="start_time" type="datetime-local" defaultValue={`${festival.start_date}T22:00`} required /></Field>
           <Field label="Fin"><input name="end_time" type="datetime-local" defaultValue={`${festival.start_date}T23:59`} required /></Field>
           <button className="btn btn-primary">Añadir al cartel</button>
