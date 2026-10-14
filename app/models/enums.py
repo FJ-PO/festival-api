@@ -31,6 +31,11 @@ class TicketStatus(StrEnum):
     CANCELLED = "cancelled"
 
 
+class ContentStatus(StrEnum):
+    DRAFT = "draft"
+    PUBLISHED = "published"
+
+
 def enum_column(enum_cls: type[StrEnum]) -> Enum:
     """Guarda en BD el valor del enum ('admin') en lugar del nombre ('ADMIN')."""
     return Enum(enum_cls, values_callable=lambda e: [m.value for m in e], native_enum=False, length=40)

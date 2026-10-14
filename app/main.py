@@ -2,12 +2,27 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 import app.models  # noqa: F401  (registra los modelos en Base.metadata)
 from app.core.config import settings
 from app.db.bootstrap import ensure_admin, upgrade_schema
 from app.db.session import Base, SessionLocal, engine
-from app.routers import artists, auth, checkin, discounts, festivals, orders, ticket_types, tickets, users, venues
+from app.routers import (
+    admin,
+    artists,
+    auth,
+    checkin,
+    cms,
+    discounts,
+    festivals,
+    media,
+    orders,
+    ticket_types,
+    tickets,
+    users,
+    venues,
+)
 
 
 @asynccontextmanager
@@ -39,6 +54,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    # Evita que el navegador "adivine" el tipo de los archivos subidos
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    return response
+
+
 for router in (
     auth.router,
     users.router,
@@ -50,8 +75,16 @@ for router in (
     orders.router,
     tickets.router,
     checkin.router,
+    cms.site_router,
+    cms.pages_router,
+    cms.posts_router,
+    media.router,
+    admin.router,
 ):
     app.include_router(router, prefix=settings.api_prefix)
+
+# Archivos subidos desde la biblioteca de medios del panel
+app.mount("/uploads", StaticFiles(directory=media.upload_path(), check_dir=False), name="uploads")
 
 
 @app.get("/health", tags=["Sistema"])
