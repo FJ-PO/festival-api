@@ -61,6 +61,10 @@ Cliente                                   API
   │                                         │
   │ GET /api/v1/admin/dashboard             │
   │ Authorization: Bearer eyJhbGciOi… ────► │ valida firma HS256 + exp, carga el usuario y comprueba su rol
+  │                                         │
+  │ POST /api/v1/auth/refresh  (poco antes de exp, si hay actividad)
+  │ Authorization: Bearer eyJhbGciOi… ────► │ token aún válido → devuelve otro nuevo con el rol actual
+  │ ◄────────── { access_token, expires_in, user }
 ```
 
 - El token es un **JWT HS256** con `sub` (id del usuario), `role`, `iat` y `exp`. Caduca a los
@@ -69,8 +73,34 @@ Cliente                                   API
   frontends hacen `fetch` con `credentials: 'omit'` y envían el token en la cabecera `Authorization`.
 - Cada frontend guarda su token en `localStorage` con su propia clave (`festival.token` en la web y
   `festival.admin.token` en el panel). Lo borra al cerrar sesión, al recibir un `401` o al llegar a su `exp`.
+- **Renovación deslizante**: si el usuario ha tenido actividad (ratón, teclado, scroll…), el frontend llama a
+  `POST /auth/refresh` 5 minutos antes de `exp` y guarda el token nuevo, así que la sesión no se corta mientras se usa.
+  Sin actividad, la sesión se cierra al caducar. Un token ya caducado no se puede renovar: hay que volver a entrar.
 - El login acepta **email o nombre de usuario**. Al panel solo entran los roles `admin`, `organizer` y `staff`, y el menú
   se adapta a cada rol. La autorización real la hace siempre la API.
+
+### Entrar con GitHub (OAuth2)
+
+La web pública permite iniciar sesión y registrarse con GitHub (flujo *Authorization Code*), **sin romper la regla de
+«solo JWT»**: GitHub solo sirve para identificar al usuario; la API emite su propio JWT, idéntico al del login normal.
+
+```
+Navegador                         API                         GitHub
+  │ pide la URL de autorización  │                             │
+  │ GET /auth/github/authorize ─►│  (añade client_id + state)  │
+  │ ◄───────────── { url } ──────│                             │
+  │ redirige a GitHub ──────────────────────────────────────► │ el usuario autoriza
+  │ ◄──────── /oauth/github/callback?code=…&state=… ────────── │
+  │ POST /auth/github { code }  ►│ canjea el code (client_secret) y lee el perfil ►│
+  │ ◄──── { access_token, user } │  crea o vincula el usuario y firma el JWT        │
+```
+
+- El navegador genera un `state` aleatorio (guardado en `sessionStorage`) y lo comprueba al volver: protección CSRF.
+- El `client_secret` **nunca** sale del backend; el `code` se canjea en la API, no en el navegador. El token no viaja por la URL.
+- Si el email de GitHub ya tenía cuenta local, se **vincula** (`github_id`); si no, se crea una cuenta nueva con rol `customer`
+  y sin contraseña local (no se puede entrar con contraseña hasta que el usuario la defina).
+- Se activa poniendo `GITHUB_CLIENT_ID` y `GITHUB_CLIENT_SECRET` en el `.env`. Sin ellas, el botón no aparece.
+  Crea la OAuth App en <https://github.com/settings/developers> con *callback* `http://localhost:5173/oauth/github/callback`.
 
 ## Panel de administración
 
@@ -91,7 +121,7 @@ Documentación interactiva en `/docs` (Swagger) y `/redoc`.
 
 | Área | Endpoints |
 |---|---|
-| Auth | `POST /auth/register` · `POST /auth/login` · `GET/PATCH /auth/me` |
+| Auth | `POST /auth/register` · `POST /auth/login` · `POST /auth/refresh` · `GET/PATCH /auth/me` · `GET /auth/providers` · `GET /auth/github/authorize` · `POST /auth/github` |
 | Usuarios (admin) | `GET /users` · `POST /users` · `PATCH /users/{id}` |
 | Recintos | `GET /venues` · `GET /venues/municipalities` · `GET/POST/PATCH/DELETE /venues/{id}` |
 | Artistas | `GET /artists` · `GET/POST/PATCH/DELETE /artists/{id}` |
@@ -155,4 +185,4 @@ Ramas, convenciones de commits y cómo abrir un pull request: [CONTRIBUTING.md](
 - Pasarela de pago real (Redsys o Stripe) con webhooks.
 - Envío de las entradas por email (PDF con QR).
 - Lector de QR por cámara en el control de acceso.
-- Rate limiting en `/auth/login` y rotación de tokens con *refresh token*.
+- Rate limiting en `/auth/login` y *refresh tokens* revocables (para cerrar sesión en todos los dispositivos).

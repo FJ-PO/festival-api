@@ -52,3 +52,16 @@ class Token(BaseModel):
     token_type: str = "bearer"
     expires_in: int
     user: UserRead
+
+
+class GithubCallback(BaseModel):
+    """Datos que el frontend envía tras volver de GitHub con el `code` de autorización."""
+
+    code: str = Field(min_length=1, max_length=512)
+    redirect_uri: str = Field(min_length=1, max_length=512)
+
+
+class AuthProviders(BaseModel):
+    """Qué métodos de inicio de sesión externos están activos (para que el frontend muestre el botón)."""
+
+    github: bool

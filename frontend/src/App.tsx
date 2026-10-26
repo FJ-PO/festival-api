@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout'
 import FestivalPage from './pages/Festival'
 import Home from './pages/Home'
 import { CmsPageView, NewsDetail, NewsList } from './pages/News'
+import { GithubCallback } from './pages/OAuthCallback'
 import PlazasPage from './pages/PlazasPage'
 import Program from './pages/Program'
 
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/p/:slug" element={<CmsPageView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
+          <Route path="/oauth/github/callback" element={<GithubCallback />} />
           <Route path="/checkout/:orderId" element={<Checkout />} />
           <Route path="/mi-cuenta/*" element={<Account />} />
           <Route path="*" element={<NotFound />} />

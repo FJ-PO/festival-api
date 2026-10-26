@@ -11,6 +11,9 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(password: str, hashed: str) -> bool:
+    # Las cuentas creadas con un proveedor externo (GitHub) no tienen hash: no se puede entrar con contraseña.
+    if not hashed:
+        return False
     return bcrypt.checkpw(password.encode(), hashed.encode())
 
 

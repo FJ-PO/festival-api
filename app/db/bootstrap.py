@@ -18,6 +18,10 @@ def upgrade_schema(engine: Engine) -> None:
         with engine.begin() as conn:
             conn.execute(text("ALTER TABLE users ADD COLUMN username VARCHAR(50)"))
             conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_username ON users (username)"))
+    if "github_id" not in columns:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE users ADD COLUMN github_id BIGINT"))
+            conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_github_id ON users (github_id)"))
 
 
 def ensure_admin(db: Session) -> User:

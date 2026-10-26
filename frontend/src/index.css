@@ -1490,6 +1490,24 @@ legend {
   max-width: 560px;
 }
 
+/* Separador "o" entre el formulario y el acceso con GitHub */
+.auth-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.auth-sep::before,
+.auth-sep::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
 /* ---------- Checkout ---------- */
 
 .checkout {

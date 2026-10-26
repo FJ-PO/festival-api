@@ -6,7 +6,7 @@ pydantic-settings>=2.3
 pyjwt>=2.8
 bcrypt>=4.1
 python-multipart>=0.0.9
+httpx>=0.27
 
 # Desarrollo / tests
 pytest>=8.0
-httpx>=0.27

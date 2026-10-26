@@ -80,8 +80,34 @@ export function login(username: string, password: string) {
   })
 }
 
+/** Indica qué inicios de sesión externos están activos en la API (p. ej. GitHub). */
+export function authProviders() {
+  return api<{ github: boolean }>('/auth/providers')
+}
+
+/** Pide a la API la URL de GitHub a la que redirigir al usuario para autorizar la app. */
+export function githubAuthorizeUrl(redirectUri: string, state: string) {
+  const params = new URLSearchParams({ redirect_uri: redirectUri, state })
+  return api<{ url: string }>(`/auth/github/authorize?${params}`)
+}
+
+/** Completa el login con GitHub: envía el `code` recibido y obtiene el JWT propio del proyecto. */
+export function githubLogin(code: string, redirectUri: string) {
+  return api<{ access_token: string; expires_in: number; user: import('./types').User }>('/auth/github', {
+    method: 'POST',
+    json: { code, redirect_uri: redirectUri },
+  })
+}
+
+/** Cambia el JWT actual (todavía válido) por uno nuevo. Con uno caducado la API responde 401. */
+export function refreshToken() {
+  return api<{ access_token: string; expires_in: number; user: import('./types').User }>('/auth/refresh', {
+    method: 'POST',
+  })
+}
+
 /** Lee el payload de un JWT (sin verificar la firma: eso lo hace el servidor). */
-export function decodeJwt(token: string): { sub: string; role: string; exp: number } | null {
+export function decodeJwt(token: string): { sub: string; role: string; iat: number; exp: number } | null {
   try {
     const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
     return JSON.parse(decodeURIComponent(escape(atob(payload))))
