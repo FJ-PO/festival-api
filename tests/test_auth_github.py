@@ -7,6 +7,13 @@ from app.models import User, UserRole
 from app.services.github import GithubProfile
 
 
+@pytest.fixture(autouse=True)
+def github_off(monkeypatch):
+    """Parte siempre sin credenciales, para no depender de las que haya en el `.env` local."""
+    monkeypatch.setattr(settings, "github_client_id", "")
+    monkeypatch.setattr(settings, "github_client_secret", "")
+
+
 @pytest.fixture()
 def github_enabled(monkeypatch):
     """Activa el login con GitHub con credenciales de prueba (no se llega a usar la red real)."""
