@@ -27,5 +27,7 @@ USER appuser
 ENV PORT=8000
 EXPOSE 8000
 
-# Shell form para que $PORT se expanda en tiempo de ejecución
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT}
+# Carga la programación de ejemplo si la BD está vacía (en Render el disco es
+# efímero, así que arranca sin datos) y luego levanta la API.
+# Shell form para que $PORT se expanda en tiempo de ejecución.
+CMD python seed.py; exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT}
