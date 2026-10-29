@@ -1,0 +1,27 @@
+# Entornos y caché de Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Frontends (no van en la imagen de la API)
+frontend/
+admin/
+node_modules/
+dist/
+
+# Secretos y bases de datos locales
+.env
+*.db
+*.db.bak
+
+# Git y metadatos
+.git/
+.github/
+*.local
+*.bundle
+
+# Subidas locales y colecciones
+uploads/
+postman/
+tests/
