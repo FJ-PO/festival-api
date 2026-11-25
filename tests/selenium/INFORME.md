@@ -193,6 +193,34 @@ ninguna defensa de capa de aplicación**:
   atacante** puede provocar un **DoS de capa 7** saturando el backend sin volumen
   (Cloudflare no lo ve como ataque porque son peticiones "legítimas").
 
+### 5.5 Estrés local vs producción (API)
+
+Para separar "lentitud de infraestructura" de "lentitud de código", se repitió la
+ráfaga sobre `/api/v1/festivals` contra la **API local** (uvicorn en `:8000`, sin
+red ni Cloudflare) y contra **producción**. Script: `stress_local_vs_prod.py`.
+
+| Métrica (100 req / 20 conc) | Local | Producción |
+|-----------------------------|------:|-----------:|
+| Throughput | **11,0 req/s** | 3,4 req/s |
+| Latencia p50 | 1 656 ms | 5 292 ms |
+| Latencia p95 | 3 011 ms | 9 283 ms |
+| Errores | 0 | 0 |
+
+**Lectura (clave):**
+- Producción es **~3,2× más lenta** que local → ese factor es **infraestructura**
+  (instancia Render free + red + Cloudflare).
+- **Pero local también es lento**: con solo 20 conexiones no pasa de ~11 req/s y
+  la p50 ya es 1,6 s. Es decir, **buena parte del coste está en el propio
+  endpoint**, no en Render: `/api/v1/festivals` es pesado (probable **N+1** al
+  cargar por cada noche su `venue`, `organizer` y calcular `price_from`), y con
+  **SQLite + 1 worker** las peticiones se serializan.
+- **Conclusión:** la lentitud es *mitad infraestructura, mitad código/consulta*.
+  Optimizar la consulta subiría el techo **en ambos** despliegues.
+
+> Caveat: no es comparación en igualdad de condiciones (local = esta máquina sin
+> red; prod = Render free + red + CDN). Justamente por eso aísla el peso de cada
+> factor.
+
 ---
 
 ## 6. Hallazgos priorizados
@@ -203,6 +231,7 @@ ninguna defensa de capa de aplicación**:
 | H7 | 🔴 Alta | **Login sin rate-limit:** 40 intentos fallidos → 0 bloqueos; fuerza bruta / credential stuffing | §5.4-C |
 | H8 | 🟠 Media | **DoS de capa 7:** `/api/v1/festivals` cae a ~4 req/s con 20 conexiones; sin rate-limit un solo atacante satura el backend | §5.4-B |
 | H2 | 🟠 Media | **No escala con la concurrencia:** throughput plano y p95 >12 s a 10 workers | §5.1 |
+| H9 | 🟠 Media | **Endpoint `/api/v1/festivals` lento incluso en local** (~11 req/s, p50 1,6 s): probable N+1 + SQLite + 1 worker | §5.5 |
 | H3 | 🟠 Media | **Assets hasheados sin caché larga:** `cache-control: public, max-age=0, s-maxage=300` en `index-*.js` (deberían ser inmutables) | cabeceras del asset |
 | H4 | 🟡 Baja | **Faltan cabeceras de seguridad:** sin CSP, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` | §3.4 |
 | H5 | 🟡 Baja | **Cold start** del plan gratuito tras hibernación | §3.3 / warm-up |
@@ -228,6 +257,10 @@ ninguna defensa de capa de aplicación**:
    artistas, plazas cambian poco) en memoria/CDN.
 4. **(H2 front) Reducir time-to-content** de la home: lazy-load de secciones no
    críticas y paginación/`limit` en las listas largas.
+8. **(H9) Optimizar `/api/v1/festivals`:** carga ansiosa (`selectinload`/`joinedload`)
+   de `venue`/`organizer` para evitar N+1, precálculo o anotación de `price_from`,
+   y varios workers de uvicorn. Con Postgres (H1) desaparece la serialización de
+   SQLite. Mejora el techo tanto en local como en producción.
 5. **(H4) Añadir cabeceras de seguridad** (CSP adaptada a la SPA, `X-Frame-Options:
    DENY`, `Referrer-Policy: strict-origin-when-cross-origin`).
 6. **(H5) Evitar hibernación** con un ping programado o un plan sin cold start.
@@ -243,8 +276,14 @@ python -m venv .venv && . .venv/bin/activate && pip install selenium
 python functional_tests.py                   # 14 pruebas funcionales
 python stress_test.py --workers 6 --iters 8  # estrés (Selenium)
 python ddos_protection_test.py               # anti-DDoS / abuso (HTTP)
+
+# Estrés local vs producción (requiere la API local en :8000)
+#   (desde la raíz del repo, en otra terminal:)
+#   uvicorn app.main:app --port 8000
+python stress_local_vs_prod.py --n 100 --conc 20
 ```
 
 **Artefactos:** `functional_tests.py`, `stress_test.py`, `ddos_protection_test.py`,
-`README.md`, `resultados_funcional.json`, `resultados_estres.json`,
-`resultados_estres_10w.json`, `resultados_ddos.json`.
+`stress_local_vs_prod.py`, `instrucciones_test.md`, `resultados_funcional.json`,
+`resultados_estres.json`, `resultados_estres_10w.json`, `resultados_ddos.json`,
+`resultados_local_vs_prod.json`.

@@ -1,0 +1,39 @@
+{
+  "endpoint": "/api/v1/festivals",
+  "n": 100,
+  "conc": 20,
+  "local": {
+    "label": "LOCAL",
+    "url": "http://127.0.0.1:8000/api/v1/festivals",
+    "n": 100,
+    "conc": 20,
+    "codes": {
+      "200": 100
+    },
+    "rps": 11.0,
+    "dur_s": 9.1,
+    "min": 614,
+    "p50": 1656,
+    "p95": 3011,
+    "p99": 3098,
+    "max": 3101,
+    "mean": 1761
+  },
+  "prod": {
+    "label": "PRODUCCIÓN",
+    "url": "https://festival-apii.onrender.com/api/v1/festivals",
+    "n": 100,
+    "conc": 20,
+    "codes": {
+      "200": 100
+    },
+    "rps": 3.4,
+    "dur_s": 29.59,
+    "min": 1905,
+    "p50": 5292,
+    "p95": 9283,
+    "p99": 11878,
+    "max": 12958,
+    "mean": 5695
+  }
+}
