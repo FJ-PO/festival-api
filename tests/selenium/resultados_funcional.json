@@ -1,0 +1,92 @@
+{
+  "base": "https://festival-api-aucn.onrender.com",
+  "passed": 14,
+  "failed": 0,
+  "seconds": 25.7,
+  "tests": [
+    {
+      "name": "Home carga: título, nav y secciones",
+      "status": "PASS",
+      "ms": 1515,
+      "detail": "título OK, nav OK, 6 h2"
+    },
+    {
+      "name": "Sin errores SEVERE en consola (home)",
+      "status": "PASS",
+      "ms": 2439,
+      "detail": "sin errores SEVERE relevantes"
+    },
+    {
+      "name": "Navegación por el menú principal",
+      "status": "PASS",
+      "ms": 1394,
+      "detail": "4 secciones navegadas"
+    },
+    {
+      "name": "Programación: filtro por plaza reduce/ajusta las tarjetas",
+      "status": "PASS",
+      "ms": 1975,
+      "detail": "22 noches -> 8 en Algeciras"
+    },
+    {
+      "name": "Programación: buscador de artista filtra resultados",
+      "status": "PASS",
+      "ms": 2205,
+      "detail": "2 resultados para 'Melendi'"
+    },
+    {
+      "name": "Artistas: hay tarjetas y abren el detalle del festival",
+      "status": "PASS",
+      "ms": 841,
+      "detail": "17 artistas; detalle melendi-algeciras-2027 OK"
+    },
+    {
+      "name": "Noticias: lista y detalle de una noticia",
+      "status": "PASS",
+      "ms": 540,
+      "detail": "4 noticias; detalle OK"
+    },
+    {
+      "name": "Plazas: 3 plazas y enlace a programación filtrada",
+      "status": "PASS",
+      "ms": 1151,
+      "detail": "3 plazas; filtro por municipio OK"
+    },
+    {
+      "name": "Login: formulario presente y rechaza credenciales inválidas",
+      "status": "PASS",
+      "ms": 3888,
+      "detail": "credenciales inválidas rechazadas (sigue en /login)"
+    },
+    {
+      "name": "Registro: valida contraseñas que no coinciden (sin crear cuenta)",
+      "status": "PASS",
+      "ms": 3090,
+      "detail": "registro bloqueado con contraseñas distintas"
+    },
+    {
+      "name": "Newsletter: valida email (no suscribe vacío)",
+      "status": "PASS",
+      "ms": 2294,
+      "detail": "envío vacío bloqueado por validación HTML5 (required)"
+    },
+    {
+      "name": "Páginas estáticas /p/:slug cargan",
+      "status": "PASS",
+      "ms": 1786,
+      "detail": "4 páginas estáticas con contenido"
+    },
+    {
+      "name": "404: ruta inexistente muestra página de error (no se rompe)",
+      "status": "PASS",
+      "ms": 436,
+      "detail": "página 404 correcta y app estable"
+    },
+    {
+      "name": "Deep-link directo a ruta interna (fallback SPA)",
+      "status": "PASS",
+      "ms": 887,
+      "detail": "deep-link /programacion servido correctamente"
+    }
+  ]
+}

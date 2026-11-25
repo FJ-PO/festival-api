@@ -1,0 +1,56 @@
+{
+  "api": "https://festival-apii.onrender.com",
+  "tests": {
+    "edge": {
+      "cloudflare": true,
+      "ratelimit_headers": {}
+    },
+    "burst_health": {
+      "n": 150,
+      "conc": 30,
+      "codes": {
+        "200": 150
+      },
+      "rps": 104.2,
+      "throttled": false
+    },
+    "burst_db": {
+      "n": 100,
+      "conc": 20,
+      "codes": {
+        "200": 100
+      },
+      "rps": 3.9,
+      "throttled": false
+    },
+    "login_abuse": {
+      "n": 40,
+      "conc": 10,
+      "codes": {
+        "401": 40
+      },
+      "rate_limited": false
+    }
+  },
+  "defenses": {
+    "Cloudflare (DDoS L3/L4 + challenge)": true,
+    "Rate-limit declarado en API": false,
+    "Throttle bajo ráfaga (/health)": false,
+    "Autoprotección BD bajo ráfaga": false,
+    "Rate-limit en login": false
+  },
+  "findings": [
+    {
+      "sev": "INFO",
+      "msg": "Cloudflare delante: ofrece mitigación DDoS L3/L4 básica y challenge."
+    },
+    {
+      "sev": "MEDIA",
+      "msg": "La API no declara cabeceras de rate-limit (RateLimit-* / Retry-After)."
+    },
+    {
+      "sev": "ALTA",
+      "msg": "El login NO limita intentos fallidos (sin 429/lockout): vulnerable a fuerza bruta / credential stuffing."
+    }
+  ]
+}
