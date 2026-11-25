@@ -1,0 +1,499 @@
+{
+  "base": "https://festival-api-aucn.onrender.com",
+  "workers": 10,
+  "iters": 6,
+  "seconds": 37.4,
+  "ok": 60,
+  "errors": 0,
+  "throughput_rps": 1.604,
+  "wall_ms": {
+    "min": 697,
+    "p50": 2876,
+    "p90": 9946,
+    "p95": 12614,
+    "p99": 13795,
+    "max": 14550
+  },
+  "samples": [
+    {
+      "worker": 0,
+      "path": "/",
+      "wall_ms": 10898,
+      "load_ms": 2395,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/plazas",
+      "wall_ms": 10539,
+      "load_ms": 3215,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/artistas",
+      "wall_ms": 12744,
+      "load_ms": 3626,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/noticias",
+      "wall_ms": 3030,
+      "load_ms": 324,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/noticias",
+      "wall_ms": 9880,
+      "load_ms": 4987,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 8185,
+      "load_ms": 3883,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/plazas",
+      "wall_ms": 2995,
+      "load_ms": 504,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 9395,
+      "load_ms": 4578,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/programacion",
+      "wall_ms": 14550,
+      "load_ms": 1843,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 2861,
+      "load_ms": 319,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 0,
+      "path": "/programacion",
+      "wall_ms": 8055,
+      "load_ms": 413,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 1428,
+      "load_ms": 256,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 8985,
+      "load_ms": 3185,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 3148,
+      "load_ms": 411,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 2350,
+      "load_ms": 292,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/",
+      "wall_ms": 13270,
+      "load_ms": 4884,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 1322,
+      "load_ms": 340,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 0,
+      "path": "/artistas",
+      "wall_ms": 1347,
+      "load_ms": 382,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/noticias",
+      "wall_ms": 3169,
+      "load_ms": 391,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/programacion",
+      "wall_ms": 1635,
+      "load_ms": 330,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/artistas",
+      "wall_ms": 4567,
+      "load_ms": 339,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 2366,
+      "load_ms": 323,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 2627,
+      "load_ms": 369,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/programacion",
+      "wall_ms": 12607,
+      "load_ms": 3110,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 2890,
+      "load_ms": 338,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 0,
+      "path": "/plazas",
+      "wall_ms": 2713,
+      "load_ms": 338,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 3149,
+      "load_ms": 295,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 2559,
+      "load_ms": 325,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/plazas",
+      "wall_ms": 2911,
+      "load_ms": 283,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 0,
+      "path": "/noticias",
+      "wall_ms": 2310,
+      "load_ms": 251,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 2423,
+      "load_ms": 336,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 3,
+      "path": "/",
+      "wall_ms": 2935,
+      "load_ms": 392,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/",
+      "wall_ms": 7542,
+      "load_ms": 344,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/",
+      "wall_ms": 7730,
+      "load_ms": 279,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 0,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 1876,
+      "load_ms": 289,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/artistas",
+      "wall_ms": 4457,
+      "load_ms": 365,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/noticias",
+      "wall_ms": 2922,
+      "load_ms": 223,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/artistas",
+      "wall_ms": 6182,
+      "load_ms": 1124,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 2,
+      "path": "/p/preguntas-frecuentes",
+      "wall_ms": 1975,
+      "load_ms": 262,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/programacion",
+      "wall_ms": 952,
+      "load_ms": 306,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/",
+      "wall_ms": 6683,
+      "load_ms": 290,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/plazas",
+      "wall_ms": 1860,
+      "load_ms": 266,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/plazas",
+      "wall_ms": 1511,
+      "load_ms": 248,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 1808,
+      "load_ms": 239,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/artistas",
+      "wall_ms": 851,
+      "load_ms": 194,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/",
+      "wall_ms": 5479,
+      "load_ms": 268,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/plazas",
+      "wall_ms": 1317,
+      "load_ms": 244,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/noticias",
+      "wall_ms": 1818,
+      "load_ms": 244,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/noticias",
+      "wall_ms": 1604,
+      "load_ms": 216,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/programacion",
+      "wall_ms": 4384,
+      "load_ms": 330,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 1,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 1730,
+      "load_ms": 211,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 7,
+      "path": "/noticias",
+      "wall_ms": 1343,
+      "load_ms": 176,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 1501,
+      "load_ms": 195,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 8,
+      "path": "/festivales/melendi-algeciras-2027",
+      "wall_ms": 1476,
+      "load_ms": 238,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/programacion",
+      "wall_ms": 4008,
+      "load_ms": 256,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/artistas",
+      "wall_ms": 1814,
+      "load_ms": 231,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 9,
+      "path": "/noticias/programacion-2027",
+      "wall_ms": 697,
+      "load_ms": 192,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 4,
+      "path": "/programacion",
+      "wall_ms": 3388,
+      "load_ms": 235,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 6,
+      "path": "/plazas",
+      "wall_ms": 706,
+      "load_ms": 196,
+      "ok": true,
+      "err": ""
+    },
+    {
+      "worker": 5,
+      "path": "/artistas",
+      "wall_ms": 965,
+      "load_ms": 164,
+      "ok": true,
+      "err": ""
+    }
+  ]
+}
